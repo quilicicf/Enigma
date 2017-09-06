@@ -47,22 +47,33 @@ var el = {
   $components: [
     {
       $type: 'form',
+      $components: [],
       $init: function() {
         var index = 1;
-        var wordInputs = _(words)
-          .map(function(word) {
-            return inputCreator(index++, word);
-          })
-          .value();
-        this.$components = wordInputs;
 
-        this.$components.push({
+        var components = this.$components;
+
+        var startDate = new Date();
+        var startMinutes = startDate.getMinutes();
+        var startHours = startDate.getHours();
+        this._startTime = startHours * 60 + startMinutes;
+        components.push({
+          $type: 'h2',
+          $text: 'Le jeu a commencé à ' + startHours + 'h' + startMinutes + '.'
+        });
+
+        _(words)
+          .each(function(word) {
+            components.push(inputCreator(index++, word));
+          });
+
+        components.push({
           $type: 'div',
           id: 'result',
           class: 'hidden'
         });
 
-        this.$components.push({
+        components.push({
           $type: 'button',
           class: 'btn btn-primary',
           $text: 'Valider',
@@ -80,6 +91,30 @@ var el = {
 
             this.classList.add('hidden');
             result.classList.remove('hidden');
+
+            var endDate = new Date();
+            var endMinutes = endDate.getMinutes();
+            var endHours = endDate.getHours();
+            var endTime = endHours * 60 + endMinutes;
+
+            var timeTaken = endTime - this._startTime;
+            if (timeTaken < 30) {
+              score += 500;
+
+            } else if (timeTaken < 40) {
+              score += 400;
+
+            } else if (timeTaken < 50) {
+              score += 300;
+
+            } else if (timeTaken < 60) {
+              score += 200;
+
+            } else if (timeTaken < 60) {
+              score += 100;
+
+            }
+
             result.innerHTML = 'Vous avez marqué: ' + score + ' points!';
           }
         });

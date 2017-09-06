@@ -16,6 +16,18 @@ body {
   visibility: hidden;
 }
 
+h2 {
+  padding-bottom: 1em;
+}
+
+#container form .has-success .form-control {
+  background-color: rgba(92, 184, 92, .5);
+}
+
+#container form .has-warning .form-control {
+  background-color: rgba(240, 173, 78, .5);
+}
+
 #container {
   width: 50%;
 }
