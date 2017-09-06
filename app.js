@@ -11,6 +11,7 @@ var words = [
 var inputCreator = function(index, word) {
   return {
     $type: 'div',
+    id: 'word' + index + '-container',
     class: 'form-group',
     $components: [
       {
@@ -28,15 +29,15 @@ var inputCreator = function(index, word) {
   };
 };
 
-var validateInput = function(input, word) {
+var validateInput = function(input, container, word) {
   var inputValue = input.value;
   input.disabled = true;
   if (input.value === word) {
-    input.classList.add('ok');
+    container.classList.add('has-success');
     return 100;
   }
 
-  input.classList.add('ko');
+  container.classList.add('has-warning');
   return 0;
 };
 
@@ -56,18 +57,30 @@ var el = {
         this.$components = wordInputs;
 
         this.$components.push({
-          $type: 'button',
-          class: 'btn btn-default',
-          $text: 'Valider',
-          onclick: function() {
-            var index = 1;
-            var score = _.reduce(words, function(currentScore, value) {
-              var input = document.querySelector('#word' + index++ + '-input');
+          $type: 'div',
+          id: 'result',
+          class: 'hidden'
+        });
 
-              return currentScore + validateInput(input, word);
+        this.$components.push({
+          $type: 'button',
+          class: 'btn btn-primary',
+          $text: 'Valider',
+          onclick: function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var index = 0;
+            var score = _.reduce(words, function(currentScore, word) {
+              var container = document.querySelector('#word' + ++index + '-container');
+              var input = document.querySelector('#word' + index + '-input');
+
+              return currentScore + validateInput(input, container, word);
             }, 0);
 
-            console.log(score);
+            this.classList.add('hidden');
+            result.classList.remove('hidden');
+            result.innerHTML = 'Vous avez marqué: ' + score + ' points!';
           }
         });
       }
