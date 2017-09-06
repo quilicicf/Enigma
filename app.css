@@ -1,0 +1,17 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Helvetica;
+  font-size: 14px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#container {
+  width: 50%;
+}
