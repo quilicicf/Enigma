@@ -57,7 +57,6 @@ var el = {
 
         this.$components.push({
           $type: 'button',
-          type: 'submit',
           class: 'btn btn-default',
           $text: 'Valider',
           onclick: function() {
