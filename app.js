@@ -41,6 +41,9 @@ var validateInput = function(input, container, word) {
   return 0;
 };
 
+var startDate = new Date();
+var startTime;
+
 var el = {
   $cell: true,
   id: 'container',
@@ -53,10 +56,10 @@ var el = {
 
         var components = this.$components;
 
-        var startDate = new Date();
         var startMinutes = startDate.getMinutes();
         var startHours = startDate.getHours();
-        this._startTime = startHours * 60 + startMinutes;
+        startTime = startHours * 60 + startMinutes;
+
         components.push({
           $type: 'h2',
           $text: 'Le jeu a commencé à ' + startHours + 'h' + startMinutes + '.'
@@ -97,25 +100,29 @@ var el = {
             var endHours = endDate.getHours();
             var endTime = endHours * 60 + endMinutes;
 
-            var timeTaken = endTime - this._startTime;
+            var timeTaken = endTime - startTime;
+            var bonus = 0;
             if (timeTaken < 30) {
-              score += 500;
+              bonus = 500;
 
             } else if (timeTaken < 40) {
-              score += 400;
+              bonus = 250;
 
             } else if (timeTaken < 50) {
-              score += 300;
+              bonus = 100;
 
             } else if (timeTaken < 60) {
-              score += 200;
+              bonus = 50;
 
-            } else if (timeTaken < 60) {
-              score += 100;
+            } else if (timeTaken < 70) {
+              bonus = 10;
 
             }
 
-            result.innerHTML = 'Vous avez marqué: ' + score + ' points!';
+            var firstSentence = 'Vous avez marqué ' + score + ' points pour vos réponses plus ' + bonus + ' de temps.';
+            var secondSentence = 'Votre score final est de ' + (score + bonus) + ' points.';
+
+            result.innerHTML = '<p>' + _.join([firstSentence, secondSentence], '</p><p>') + '</p>';
           }
         });
       }
