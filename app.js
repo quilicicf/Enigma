@@ -1,5 +1,5 @@
 var words = [
-  'densité',
+  'rouge',
   'parallèle',
   'onde électromagnétique',
   'verrerie',
