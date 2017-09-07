@@ -1,3 +1,11 @@
+document.onkeydown = function(ev) {
+  var keyEvent = (ev || event);
+  var keyCode = keyEvent.keyCode;
+  if (keyCode === 116 || (keyCode === 82 && keyEvent.ctrlKey)) {
+    return false;  // disable F5 key and ctrl-r
+  }
+}
+
 var words = [
   'rouge',
   'parallèle',
@@ -29,10 +37,15 @@ var inputCreator = function(index, word) {
   };
 };
 
+var processWord = function(word) {
+  var trimmed = _.trim(word);
+  return trimmed.toLowerCase();
+};
+
 var validateInput = function(input, container, word) {
   var inputValue = input.value;
   input.disabled = true;
-  if (input.value === word) {
+  if (processWord(input.value) === processWord(word)) {
     container.classList.add('has-success');
     return 100;
   }
