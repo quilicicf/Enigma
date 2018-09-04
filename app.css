@@ -28,6 +28,10 @@ h2 {
   background-color: rgba(240, 173, 78, .5);
 }
 
+#container form .has-error .form-control {
+  background-color: rgba(224, 88, 76, .5);
+}
+
 #container {
   width: 50%;
 }
