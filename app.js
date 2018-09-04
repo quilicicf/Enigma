@@ -139,7 +139,7 @@ var validateInput = function (input, container, word) {
     container.classList.add('has-success');
 
   } else if (score === 0) {
-    container.classList.add('has-error');
+    container.classList.add('has-danger');
 
   } else {
     container.classList.add('has-warning');
